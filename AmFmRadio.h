@@ -3,8 +3,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <iostream>
+#include <stdbool.h>
 #include <string>
 #include <conio.h>
+#include <new>
 #pragma warning(disable: 4996) // required by Visual Studio
 
 
@@ -48,12 +50,15 @@ private:
 	/* -------------- CONSTANTS ------------- */
 	/* -------------- ATTRIBUTES ------------ */
 	Freqs	freq[STATIONS];
-	Freqs frequencies;
-	double	current_station;
+	Freqs frequencies;	
 	char	band[AM_FM];
+	double	current_station;
 	int		volume;
 	bool	on;
 	bool displayOutput;
+	
+	
+
 
 	/* ====================================== */
 	/*              PUBLIC                    */
@@ -62,17 +67,15 @@ public:
 	/* -------------- ATTRIBUTES ------------ */
 	/* - MEMBER FUNCTIONS/METHOD PROTOTYPES - */
 	void PowerToggle(void);
-	void ToggleBand(void);
 	int SelectPresetFreq(int freq_num);
 	void ShowCurrentSettings(void);
-	void ScanUp(void);
-	void ScanDown(void);
+
 
 
 
 	AmFmRadio(bool isOn = false);										//Constructor
 	AmFmRadio(bool isOn, Freqs presets[]);								//Constructor
-	~AmFmRadio();														//Destructor
+	virtual ~AmFmRadio(void);						                    //Destructor
 
 
 	/* ---------- ACCESSOR METHODS PROTOTYPES --------- */
@@ -83,6 +86,7 @@ public:
 	int GetVolume(void);
 	bool IsRadioOn(void);
 	bool GetDisplayOutput(void);
+	
 
 
 	/* ---------- MUTATOR PROTOTYPES --------- */
@@ -92,6 +96,11 @@ public:
 	int SetVolume(int secondVolume);
 	void SetCurrentStation(double station);
 	void SetDisplayOutput(bool display);
+
+
+	virtual const void ToggleFrequency(void);
+	virtual void ScanUp(void);
+	virtual void ScanDown(void);
 
 };
 #endif
