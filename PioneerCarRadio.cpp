@@ -1,4 +1,6 @@
 #include "PioneerCarRadio.h"
+#include "PioneerAM.h"
+#include "PioneerWorld.h"
 /*  -- Constructor Header Comment
     Name    :   PioneerCarRadio-- CONSTRUCTOR
     Purpose :   Constructor for the PioneerCarRadio sub-class. Initializes the
@@ -42,9 +44,9 @@ PioneerCarRadio::PioneerCarRadio(bool isOn) : AmFmRadio(isOn)
     Outputs :   Outputs a message indicating the destruction of the PioneerCarRadio object.
     Returns :   None
 */
-PioneerCarRadio::~PioneerCarRadio()
+PioneerCarRadio:: ~PioneerCarRadio(void)
 {
-    printf("\n\nDestroying PioneerCarRadio\n");
+    printf("\nDestroying PioneerCarRadio\n");
 }
 
 
@@ -61,53 +63,23 @@ PioneerCarRadio::~PioneerCarRadio()
 void PioneerCarRadio::KeystrokeHandling(void)
 {
     char keyboard = 0;
-
+    
     do
     {
         system("cls");
-        //Radio off
+        
         if (IsRadioOn())
         {
             printf("\nPioneer XS440");
-            printf("\nRadios is off");
+            printf("\nRadios is off ");
             keyboard = _getch();
+            
         }
-        else//Radio on
+        else
         {
             printf("\nPioneer XS440");
             printf("\nRadios is on ");
-            printf("\nVolume: %d\n", GetVolume());
-
-            if (strcmp("AM", GetBand()) == 0)
-            {
-                printf("Current Station: %5.f %s\n", GetCurrentStation(), GetBand());
-            }
-            else
-            {
-                printf("Current Station: %5.1f %s\n", GetCurrentStation(), GetBand());
-            }
-
-            printf("AM Buttons:\n");
-            for (int i = 0; i < 5; ++i)
-            {
-                printf("%d: %5d", i + 1, GetFreq()[i].AMFreq);
-                if (i < 4)
-                {
-                    printf(", ");
-                }
-            }
-
-            printf("\nFM Buttons:\n");
-            for (int j = 0; j < 5; ++j)
-            {
-                printf("%d: %5.1f", j + 1, GetFreq()[j].FMFreq);
-                if (j < 4)
-                {
-                    printf(", ");
-                }
-            }
-            printf("\n");
-
+            ShowCurrentSettings();
             keyboard = _getch();
         }
 
@@ -135,7 +107,7 @@ void PioneerCarRadio::KeystrokeHandling(void)
             break;
         case 'b':
             // Toggle band
-            ToggleBand();
+            ToggleFrequency();
             break;
         case '1':
         case '2':
@@ -162,8 +134,53 @@ void PioneerCarRadio::KeystrokeHandling(void)
             break;
         case 'x':
             PioneerCarRadio::~PioneerCarRadio();
-            exit(1);
+            return;
         }
     } while (1);
 
+}
+
+
+/*  -- Member Function Header Comment
+    Name    :   ShowCurrentSettings
+    Purpose :   Display the current settings of the radio, including the radio band, 
+				volume, and current station.Also displays the preset frequency 
+                settings for both AM and FM bands
+    Inputs  :   None
+    Outputs :   Displays current radio settings.
+    Returns :   None
+*/
+void PioneerCarRadio::ShowCurrentSettings(void)
+{
+    printf("\nVolume: %d\n", GetVolume());
+
+    if (strcmp("AM", GetBand()) == 0)
+    {
+        printf("Current Station: %5.f %s\n", GetCurrentStation(), GetBand());
+    }
+    else
+    {
+        printf("Current Station: %5.1f %s\n", GetCurrentStation(), GetBand());
+    }
+
+    printf("AM Buttons:\n");
+    for (int i = 0; i < 5; ++i)
+    {
+        printf("%d: %5d", i + 1, GetFreq()[i].AMFreq);
+        if (i < 4)
+        {
+            printf(", ");
+        }
+    }
+
+    printf("\nFM Buttons:\n");
+    for (int j = 0; j < 5; ++j)
+    {
+        printf("%d: %5.1f", j + 1, GetFreq()[j].FMFreq);
+        if (j < 4)
+        {
+            printf(", ");
+        }
+    }
+    printf("\n");   
 }
