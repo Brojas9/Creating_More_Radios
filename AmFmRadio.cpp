@@ -72,8 +72,8 @@ AmFmRadio::AmFmRadio(bool isOn, Freqs presets[]) : displayOutput(false)
 	Outputs :   Outputs a message indicating the destruction of the AmFmRadio object.
 	Returns :   None
 */
-AmFmRadio::~AmFmRadio()
-{
+AmFmRadio::~AmFmRadio(void)
+{	
 	if (displayOutput)
 	{
 		printf("\nDestroying AmFmRadio\n");
@@ -139,7 +139,7 @@ void AmFmRadio::PowerToggle(void)
 	Outputs :   Updates the band (AM or FM).
 	Returns :   None
 */
-void AmFmRadio::ToggleBand(void)
+const void AmFmRadio::ToggleFrequency(void)
 {
 	if (strcmp(band, "AM") == 0)
 	{
