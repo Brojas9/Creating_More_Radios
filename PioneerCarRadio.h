@@ -19,7 +19,7 @@ class PioneerCarRadio : public AmFmRadio
 	/*              PRIVATE                   */
 	/* ====================================== */
 private:
-
+	
 
 	/* -------------- CONSTANTS ------------- */
 	/* -------------- ATTRIBUTES ------------ */
@@ -31,13 +31,14 @@ private:
 public:
 	/* -------------- ATTRIBUTES ------------ */
 	/* - MEMBER FUNCTIONS/METHOD PROTOTYPES - */
-	void KeystrokeHandling(void);
 
+			
+	PioneerCarRadio(bool isOn = false);					     //Constructor								
+	virtual ~PioneerCarRadio(void) override;					         //Destructor
 
-
-	PioneerCarRadio(bool isOn = false);		    //Constructor								
-	~PioneerCarRadio();					        //Destructor
-
+	
+	virtual void ShowCurrentSettings(void);
+	virtual void KeystrokeHandling(void);
 
 };
 #endif
